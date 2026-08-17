@@ -760,28 +760,30 @@ const DEFAULT_ITEMS={
   pantry: [{em:'🧊',nm:'김치냉장고 정리',m:20,spot:'fridge'},{em:'🧽',nm:'보조 싱크 청소',m:10,spot:'sink'},
            {em:'🥫',nm:'식료품 정리',m:15,spot:'upper'},{em:'📦',nm:'생필품 재고 확인',m:10}],
   utility:[{em:'🧺',nm:'세탁기 돌리기',m:60,spot:'washer'},{em:'🌀',nm:'건조기 돌리기',m:50,spot:'dryer'},
-           {em:'👕',nm:'빨래 널기',m:15,spot:'rack'},{em:'♻️',nm:'분리수거',m:15},{em:'🧴',nm:'청소도구 정리',m:10}],
+           {em:'👕',nm:'빨래 널기',m:15,spot:'rack'},{em:'♻️',nm:'분리수거',m:15,obj:'bin'},{em:'🧴',nm:'청소도구 정리',m:10,obj:'vacuum'}],
   kitchen:[{em:'🧊',nm:'냉장고 정리',m:20,spot:'fridge'},{em:'🍽️',nm:'설거지',m:15,spot:'sink'},
            {em:'🔥',nm:'후드 · 레인지',m:15,spot:'micro'},{em:'🥫',nm:'상부장 정리',m:15,spot:'upper'},
            {em:'🧽',nm:'싱크대 살균',m:10},{em:'🥗',nm:'식단 준비',m:30},{em:'🗑️',nm:'음식물 처리',m:5}],
-  study:  [{em:'📖',nm:'집중 독서',m:25},{em:'✍️',nm:'기록 · 메모',m:15},{em:'👀',nm:'눈 온찜질',m:10},{em:'🪑',nm:'자세 리셋 · 기립',m:3},{em:'🗂️',nm:'책상 정리',m:10}],
+  study:  [{em:'📖',nm:'집중 독서',m:25,obj:'books'},{em:'✍️',nm:'기록 · 메모',m:15,obj:'desk'},{em:'👀',nm:'눈 온찜질',m:10},{em:'🪑',nm:'자세 리셋 · 기립',m:3,obj:'chair'},{em:'🗂️',nm:'책상 정리',m:10}],
   bath1:  [{em:'🚿',nm:'샤워부스 곰팡이',m:20,spot:'shower'},{em:'🪞',nm:'세면대 · 거울',m:10,spot:'basin'},
            {em:'🚽',nm:'변기 청소',m:10,spot:'toilet'},{em:'🕳️',nm:'배수구 청소',m:10},
            {em:'🪥',nm:'양치 · 치실',m:5},{em:'🧴',nm:'샤워 후 보습',m:3}],
   bath2:  [{em:'🚽',nm:'변기 청소',m:10,spot:'toilet'},{em:'🪞',nm:'세면대 · 거울',m:10,spot:'basin'},
-           {em:'🧼',nm:'바닥 물때 제거',m:15,spot:'shower'},{em:'💨',nm:'환풍기 돌리기',m:30},{em:'🧻',nm:'수건 · 비품 교체',m:5}],
-  closet: [{em:'👕',nm:'빨래 개기',m:20},{em:'🪡',nm:'옷 정리 · 비우기',m:30},{em:'👞',nm:'신발 관리',m:15},{em:'🧥',nm:'계절 옷 교체',m:40},{em:'♨️',nm:'다림질',m:20}],
+           {em:'🧼',nm:'바닥 물때 제거',m:15,spot:'shower'},{em:'💨',nm:'환풍기 돌리기',m:30},{em:'🧻',nm:'수건 · 비품 교체',m:5,obj:'towel'}],
+  closet: [{em:'👕',nm:'빨래 개기',m:20,obj:'dryrack'},{em:'🪡',nm:'옷 정리 · 비우기',m:30,obj:'clothes'},{em:'👞',nm:'신발 관리',m:15},{em:'🧥',nm:'계절 옷 교체',m:40},{em:'♨️',nm:'다림질',m:20}],
   living: [{em:'🪜',nm:'천국의 계단',m:20,spot:'stairs'},{em:'📺',nm:'TV장 정리',m:10,spot:'tv'},
            {em:'🛋️',nm:'소파 정리',m:10,spot:'sofa'},
-           {em:'🧘',nm:'스트레칭 매트',m:10},{em:'🌀',nm:'폼롤러',m:8},{em:'🧹',nm:'바닥 청소',m:15},
-           {em:'🪟',nm:'환기',m:10},{em:'🪴',nm:'식물 물주기',m:5}],
+           {em:'🧘',nm:'스트레칭 매트',m:10,obj:'mat'},{em:'🌀',nm:'폼롤러',m:8,obj:'roller'},
+           {em:'🧹',nm:'바닥 청소',m:15,obj:'vacuum'},{em:'🪟',nm:'환기',m:10,obj:'purifier'},
+           {em:'🪴',nm:'식물 물주기',m:5,obj:'plant'}],
   master: [{em:'🛏️',nm:'이불 정리 · 환기',m:10,spot:'bed'},{em:'☀️',nm:'아침 햇빛',m:10,spot:'window'},
-           {em:'🌙',nm:'취침 루틴',m:30},{em:'🧘',nm:'취침 전 스트레칭',m:10},{em:'📵',nm:'화면 끄기',m:30}],
+           {em:'🌙',nm:'취침 루틴',m:30,obj:'lamp'},{em:'🧘',nm:'취침 전 스트레칭',m:10,obj:'mat'},{em:'📵',nm:'화면 끄기',m:30}],
   game:   [{em:'🏆',nm:'보드게임 랭킹 랩',m:0,url:'https://sungmin182.github.io/boardgame-ranking-lab/'},
-           {em:'🎲',nm:'가족 보드게임',m:45},{em:'🧩',nm:'퍼즐',m:30},{em:'♟️',nm:'전략 게임',m:40},{em:'📦',nm:'게임 정리',m:10},{em:'🍿',nm:'간식 · 대화 타임',m:20}],
-  balcony:[{em:'🏃',nm:'러닝머신',m:30,spot:'tread'},{em:'🚴',nm:'실내자전거',m:20,spot:'bike'},
-           {em:'🏋️',nm:'아령 세트',m:20,spot:'bench'},{em:'🪟',nm:'발코니 환기',m:10,spot:'window'},
-           {em:'🤸',nm:'철봉 · 턱걸이',m:10},{em:'🧎',nm:'플랭크 · 코어',m:5},{em:'🪢',nm:'줄넘기',m:10}]
+           {em:'🎲',nm:'가족 보드게임',m:45,obj:'boardgame'},{em:'🧩',nm:'퍼즐',m:30},{em:'♟️',nm:'전략 게임',m:40},{em:'📦',nm:'게임 정리',m:10},{em:'🍿',nm:'간식 · 대화 타임',m:20}],
+  balcony:[{em:'🏃',nm:'러닝머신',m:30,obj:'treadmill'},{em:'🚴',nm:'실내자전거',m:20,obj:'bike'},
+           {em:'🏋️',nm:'아령 세트',m:20,obj:'dumbbell'},{em:'🪟',nm:'발코니 환기',m:10,spot:'window'},
+           {em:'🤸',nm:'철봉 · 턱걸이',m:10,obj:'pullup'},{em:'🧎',nm:'플랭크 · 코어',m:5,obj:'mat'},
+           {em:'🪢',nm:'줄넘기',m:10,obj:'rope'}]
 };
 
 /* ---- 보관함 정의 (노션식 데이터베이스). sp = 어느 공간/부위에 붙는지 ---- */
@@ -830,17 +832,22 @@ const Store={
     }
     if(!Array.isArray(this.s.log)) this.s.log=[];
     /* 이미 저장된 목록에는 새로 추가된 기본 항목(링크 등)이 없다 → 한 번만 채워 넣는다 */
-    if(this.s.mig!==3){
+    if(this.s.mig!==5){
       for(const sp of SPACES){
         if(sp.noAct) continue;
         const cur=this.s.items[sp.id];
         (DEFAULT_ITEMS[sp.id]||[]).forEach((d,i)=>{
           const ex=cur.find(x=>x.nm===d.nm);
-          if(ex){ if(d.spot&&!ex.spot) ex.spot=d.spot; if(d.url&&!ex.url) ex.url=d.url }
+          if(ex){ if(d.spot&&!ex.spot) ex.spot=d.spot; if(d.url&&!ex.url) ex.url=d.url; if(d.obj&&!ex.obj) ex.obj=d.obj }
           else cur.push({id:'d'+i+'_'+sp.id,...d});     // 새로 생긴 기본 항목 보충
         });
       }
-      this.s.mig=3;
+      this.s.mig=5;
+    }
+    if(!this.s.objGuess){
+      for(const sp of SPACES){ if(sp.noAct) continue;
+        for(const it of this.s.items[sp.id]) if(!it.obj&&!it.spot){ const g=guessObj(it.nm); if(g) it.obj=g } }
+      this.s.objGuess=1;
     }
     /* 보관함 */
     if(!this.s.inv||typeof this.s.inv!=='object') this.s.inv={};
@@ -1612,7 +1619,7 @@ function fpvSvg(s){
     game:['#eeddE4','#d9b98d','boxes'],    kitchen:['#e9e4da','#e3ddd0','cabinet'],
     bath:['#dfe9ee','#cfd8dc','tile'],     utility:['#e0e5e8','#c8ccce','washer'],
     pantry:['#e4e8ea','#d5dadd','cabinet'],
-    entry:['#e6dfd4','#9c968b','door'],    balcony:['#dde6dd','#c9cfc6','gym'],
+    entry:['#e6dfd4','#9c968b','door'],    balcony:['#dde6dd','#c9cfc6','glass'],
     hall:['#e6e2da','#e8dcc4','plain']
   }[s.type]||['#e6e2da','#e8dcc4','plain'];
   const [wall,floor,kind]=T;
@@ -1652,17 +1659,6 @@ function fpvSvg(s){
         <rect x="176" y="130" width="48" height="16" rx="4" fill="#fff" stroke="#8a8175" stroke-width="2"/>
         <rect x="252" y="146" width="36" height="32" rx="6" fill="#fff" stroke="#8a8175" stroke-width="2"/>
         <rect x="256" y="140" width="28" height="12" rx="5" fill="#eef4f7" stroke="#8a8175" stroke-width="1.6"/>`;
-  if(kind==='gym')
-    fx=`<rect x="150" y="62" width="110" height="44" fill="#cfe2ef" stroke="#8a8175" stroke-width="2.5"/>
-        <line x1="205" y1="62" x2="205" y2="106" stroke="#8a8175" stroke-width="2"/>
-        <rect x="120" y="126" width="96" height="30" rx="4" fill="#3c4046" stroke="#23262b" stroke-width="2"/>
-        <rect x="126" y="110" width="8" height="18" fill="#5a6068"/><rect x="202" y="110" width="8" height="18" fill="#5a6068"/>
-        <rect x="124" y="104" width="88" height="7" rx="3.5" fill="#5a6068"/>
-        <circle cx="254" cy="150" r="17" fill="none" stroke="#3c4046" stroke-width="5"/>
-        <rect x="246" y="118" width="7" height="26" rx="3" fill="#5a6068"/>
-        <rect x="234" y="112" width="34" height="6" rx="3" fill="#5a6068"/>
-        <rect x="292" y="146" width="54" height="14" rx="4" fill="#6b5344" stroke="#4a3a2f" stroke-width="1.6"/>
-        <circle cx="296" cy="168" r="8" fill="#3c4046"/><circle cx="342" cy="168" r="8" fill="#3c4046"/>`;
   if(kind==='washer')
     fx=`<rect x="140" y="96" width="54" height="60" rx="4" fill="#fff" stroke="#8a8175" stroke-width="2"/>
         <circle cx="167" cy="128" r="17" fill="#cfd8dc" stroke="#8a8175" stroke-width="2"/>
@@ -1693,6 +1689,7 @@ function fpvSvg(s){
     <line x1="0" y1="0" x2="112" y2="52" stroke="#00000018"/><line x1="400" y1="0" x2="288" y2="52" stroke="#00000018"/>
     <line x1="0" y1="240" x2="112" y2="178" stroke="#00000018"/><line x1="400" y1="240" x2="288" y2="178" stroke="#00000018"/>
     <rect x="112" y="52" width="176" height="126" fill="none" stroke="#00000022" stroke-width="1.5"/>
+    ${s.noAct?'':fpvObjectsSvg(s)}
   </svg>`;
 }
 
@@ -1717,17 +1714,36 @@ function fpvSpots(kind){
     case 'tile':   return [S(160,70,80,52,'shower'), S(176,128,48,18,'basin'), S(250,140,40,38,'toilet')];
     case 'washer': return [S(140,96,54,60,'washer'), S(206,96,54,60,'dryer'), S(132,62,136,18,'rack')];
     case 'door':   return [S(158,62,84,116,'door'), S(118,120,34,58,'shoes')];
-    case 'gym':    return [S(120,110,96,52,'tread'), S(232,120,44,44,'bike'), S(292,132,54,30,'bench'),
-                           S(150,62,110,44,'window')];
     case 'glass':  return [S(140,72,120,76,'window')];
     default:       return [];
   }
 }
 const FPV_KIND={living:'livingset',bed:'bedwin',study:'shelf',closet:'rail',game:'boxes',kitchen:'cabinet',
-  pantry:'cabinet',bath:'tile',utility:'washer',entry:'door',balcony:'gym'};
+  pantry:'cabinet',bath:'tile',utility:'washer',entry:'door',balcony:'glass'};
+/* 바닥에 놓인 물건들을 SVG로 그린다 (fpvSvg 안쪽에 삽입) */
+function fpvObjectsSvg(sp){
+  const placed=floorItems(sp);
+  return placed.map(({it,slot})=>{
+    const o=OBJS[it.obj]; if(!o) return '';
+    return `<g transform="translate(${slot.x},${slot.y}) scale(${slot.s})">
+      <ellipse cx="0" cy="1" rx="${34}" ry="7" fill="#000" opacity=".13"/>${o.svg}</g>`;
+  }).join('');
+}
+/* 어떤 활동이 바닥 어느 자리에 놓이는지 — 그림과 클릭영역이 같은 값을 쓴다 */
+function floorItems(sp){
+  const seen=new Set(), out=[];
+  for(const it of Store.items(sp.id)){
+    if(!it.obj||!OBJS[it.obj]||seen.has(it.obj)) continue;   // 같은 물건은 하나만
+    seen.add(it.obj); out.push(it);
+    if(out.length>=FLOOR_SLOTS.length) break;
+  }
+  return out.map((it,i)=>({it,slot:FLOOR_SLOTS[i]}));
+}
 function fpvOverlay(sp){
-  const spots=fpvSpots(FPV_KIND[sp.type]||''); if(!spots.length) return '';
-  const items=Store.items(sp.id);
+  const spots=fpvSpots(FPV_KIND[sp.type]||'');
+  const floor=floorItems(sp);
+  const onFloor=new Set(floor.map(f=>f.it.id));
+  const items=Store.items(sp.id).filter(x=>!onFloor.has(x.id));
   const used=new Set(), pair=new Array(spots.length).fill(null);
   spots.forEach((s,i)=>{                       // 1) 가구 이름이 맞는 활동을 먼저 배치
     if(!s.key) return;
@@ -1738,14 +1754,138 @@ function fpvOverlay(sp){
   spots.forEach((s,i)=>{                       // 2) 구분 없는 자리에만 남은 활동을 채움
     if(!s.key && r<rest.length) pair[i]=rest[r++];
   });
-  return spots.map((s,i)=>{
-    const it=pair[i]; if(!it) return '';
-    return `<button class="fspot${it.url?' has':''}" data-it="${it.id}"
-      style="left:${s.x/400*100}%;top:${s.y/240*100}%;width:${s.w/400*100}%;height:${s.h/240*100}%"
-      title="${esc(it.nm)}${it.url?' — 링크 열기':it.m?` — ${it.m}분 타이머`:''}">
+  const tip=it=>`${esc(it.nm)}${it.url?' — 링크 열기':it.m?` — ${it.m}분 타이머`:''}`;
+  const btn=(it,l,t,w,h)=>`<button class="fspot${it.url?' has':''}" data-it="${it.id}"
+      style="left:${l/400*100}%;top:${t/240*100}%;width:${w/400*100}%;height:${h/240*100}%" title="${tip(it)}">
       <span class="fl">${it.em}${it.url?' ↗':''}<i>${esc(it.nm)}</i></span></button>`;
+  const fixed=spots.map((s,i)=>pair[i]?btn(pair[i],s.x,s.y,s.w,s.h):'').join('');
+  /* 바닥 물건은 그려진 크기에 맞춰 클릭영역을 씌운다 */
+  const onfloor=floor.map(({it,slot})=>{
+    const w=84*slot.s, h=112*slot.s;
+    return btn(it, slot.x-w/2, slot.y-h+6, w, h);
   }).join('');
+  return fixed+onfloor;
 }
+
+/* ---------- ④-4c 오브젝트 도감 ----------
+   활동을 추가하면 방 그림에 실제 물건이 생긴다.
+   좌표는 «바닥 가운데가 원점, 위쪽이 음수» 인 로컬 좌표. 배치할 때 translate+scale 한다. */
+const OBJS={
+  pullup:{nm:'문틀 턱걸이',em:'🤸',kw:['턱걸이','철봉','풀업','친업','매달리'],svg:
+    `<rect x="-40" y="-104" width="7" height="104" fill="#8a8175"/><rect x="33" y="-104" width="7" height="104" fill="#8a8175"/>
+     <rect x="-44" y="-110" width="88" height="9" rx="4.5" fill="#3c4046"/>
+     <rect x="-30" y="-84" width="60" height="7" rx="3.5" fill="#5a6068"/>
+     <rect x="-44" y="-4" width="88" height="6" rx="3" fill="#6b7076"/>`},
+  treadmill:{nm:'러닝머신',em:'🏃',kw:['러닝','트레드','달리기','걷기'],svg:
+    `<rect x="-52" y="-22" width="104" height="22" rx="5" fill="#3c4046"/>
+     <rect x="-46" y="-18" width="92" height="12" rx="3" fill="#23262b"/>
+     <rect x="30" y="-74" width="8" height="56" fill="#5a6068"/>
+     <rect x="6" y="-82" width="40" height="18" rx="4" fill="#2b2f34"/>
+     <rect x="-14" y="-70" width="52" height="6" rx="3" fill="#5a6068"/>`},
+  bike:{nm:'실내자전거',em:'🚴',kw:['자전거','사이클','싸이클','스피닝'],svg:
+    `<circle cx="-18" cy="-20" r="19" fill="none" stroke="#3c4046" stroke-width="6"/>
+     <rect x="-4" y="-64" width="7" height="46" fill="#5a6068"/>
+     <rect x="-22" y="-72" width="40" height="9" rx="4" fill="#2b2f34"/>
+     <rect x="10" y="-58" width="30" height="6" rx="3" fill="#5a6068"/>
+     <rect x="-40" y="-5" width="70" height="6" rx="3" fill="#6b7076"/>`},
+  dumbbell:{nm:'아령',em:'🏋️',kw:['아령','덤벨','웨이트','근력','벤치','바벨'],svg:
+    `<rect x="-34" y="-14" width="16" height="14" rx="3" fill="#3c4046"/>
+     <rect x="18" y="-14" width="16" height="14" rx="3" fill="#3c4046"/>
+     <rect x="-18" y="-10" width="36" height="5" rx="2.5" fill="#8e959d"/>
+     <rect x="-30" y="-30" width="14" height="12" rx="3" fill="#5a6068"/>
+     <rect x="16" y="-30" width="14" height="12" rx="3" fill="#5a6068"/>
+     <rect x="-16" y="-27" width="32" height="4" rx="2" fill="#8e959d"/>`},
+  mat:{nm:'요가 매트',em:'🧘',kw:['매트','스트레칭','요가','플랭크','코어','맨몸','스쿼트','푸시업'],svg:
+    `<ellipse cx="0" cy="-3" rx="56" ry="12" fill="#7f9c8f"/>
+     <ellipse cx="0" cy="-6" rx="56" ry="12" fill="#9ab8a9"/>
+     <path d="M-56,-6 a56,12 0 0 0 112,0" fill="none" stroke="#6f8a7d" stroke-width="1.6"/>`},
+  roller:{nm:'폼롤러',em:'🌀',kw:['폼롤러','롤러','마사지'],svg:
+    `<rect x="-30" y="-20" width="60" height="20" rx="10" fill="#5f6b7a"/>
+     <ellipse cx="-30" cy="-10" rx="6" ry="10" fill="#8792a3"/>
+     <ellipse cx="30" cy="-10" rx="6" ry="10" fill="#48525e"/>`},
+  rope:{nm:'줄넘기',em:'🪢',kw:['줄넘기','스킵'],svg:
+    `<path d="M-26,-2 q26,-40 52,0" fill="none" stroke="#c0655a" stroke-width="4"/>
+     <rect x="-32" y="-10" width="8" height="18" rx="4" fill="#3c4046"/>
+     <rect x="24" y="-10" width="8" height="18" rx="4" fill="#3c4046"/>`},
+  stepper:{nm:'스텝 기구',em:'🪜',kw:['계단','스텝','천국'],svg:
+    `<rect x="-26" y="-56" width="52" height="56" fill="#3c4046"/>
+     ${[0,1,2,3].map(i=>`<line x1="-26" y1="${-46+i*13}" x2="26" y2="${-46+i*13}" stroke="#8e959d" stroke-width="2.5"/>`).join('')}
+     <rect x="-22" y="-70" width="44" height="7" rx="3.5" fill="#5a6068"/>`},
+  plant:{nm:'화분',em:'🪴',kw:['화분','물주기','반려식물','식물 키우'],svg:
+    `<path d="M-14,0 h28 l-4,-22 h-20 Z" fill="#c08050"/>
+     <path d="M0,-22 q-22,-14 -16,-34 q14,4 16,34" fill="#5f9b6a"/>
+     <path d="M0,-22 q22,-14 16,-34 q-14,4 -16,34" fill="#4d8a58"/>
+     <path d="M0,-22 q-4,-24 2,-38 q8,16 -2,38" fill="#6fae79"/>`},
+  vacuum:{nm:'청소기',em:'🧹',kw:['청소기','바닥 청소','먼지','걸레','바닥 쓸'],svg:
+    `<rect x="-20" y="-14" width="40" height="14" rx="4" fill="#4a5560"/>
+     <rect x="-4" y="-72" width="7" height="58" fill="#8792a3"/>
+     <rect x="-14" y="-82" width="28" height="12" rx="5" fill="#3c4046"/>`},
+  dryrack:{nm:'빨래 건조대',em:'👕',kw:['빨래','건조대','널기','세탁물'],svg:
+    `<path d="M-34,0 l12,-52 M34,0 l-12,-52" stroke="#9aa3ab" stroke-width="4" fill="none"/>
+     <rect x="-26" y="-56" width="52" height="5" rx="2.5" fill="#8792a3"/>
+     ${[0,1,2].map(i=>`<rect x="${-20+i*14}" y="-52" width="10" height="26" rx="2" fill="${['#93a7c4','#c9c2b4','#8fa295'][i]}"/>`).join('')}`},
+  books:{nm:'책 더미',em:'📖',kw:['독서','읽기','도서'],svg:
+    `<rect x="-22" y="-10" width="44" height="10" rx="2" fill="#a8553f"/>
+     <rect x="-19" y="-19" width="38" height="9" rx="2" fill="#3f6b8a"/>
+     <rect x="-16" y="-27" width="32" height="8" rx="2" fill="#5f7f5a"/>`},
+  desk:{nm:'책상',em:'🗂️',kw:['책상','메모','기록','공부','업무'],svg:
+    `<rect x="-40" y="-40" width="80" height="7" rx="3" fill="#c99a63"/>
+     <rect x="-36" y="-33" width="6" height="33" fill="#a8814f"/><rect x="30" y="-33" width="6" height="33" fill="#a8814f"/>
+     <rect x="-14" y="-54" width="28" height="14" rx="2" fill="#3c4046"/><rect x="-4" y="-40" width="8" height="4" fill="#5a6068"/>`},
+  lamp:{nm:'스탠드 조명',em:'🕯️',kw:['조명','스탠드','불끄기','램프'],svg:
+    `<ellipse cx="0" cy="-2" rx="14" ry="5" fill="#5a6068"/>
+     <rect x="-2" y="-58" width="4" height="56" fill="#8792a3"/>
+     <path d="M-18,-58 h36 l-7,-22 h-22 Z" fill="#e8d5a8"/>`},
+  purifier:{nm:'공기청정기',em:'💨',kw:['환기','공기','청정','창문','바람'],svg:
+    `<rect x="-18" y="-58" width="36" height="58" rx="6" fill="#e4e7ea" stroke="#b9c0c6" stroke-width="1.6"/>
+     <circle cx="0" cy="-34" r="12" fill="none" stroke="#9aa3ab" stroke-width="2.5"/>
+     <circle cx="0" cy="-34" r="4" fill="#9aa3ab"/>
+     <rect x="-9" y="-14" width="18" height="4" rx="2" fill="#b9c0c6"/>`},
+  bin:{nm:'분리수거함',em:'♻️',kw:['쓰레기','분리수거','재활용','음식물'],svg:
+    `<path d="M-18,0 h36 l-4,-38 h-28 Z" fill="#6f8a7d"/>
+     <rect x="-22" y="-44" width="44" height="7" rx="3" fill="#4f6a5d"/>
+     <rect x="-6" y="-50" width="12" height="6" rx="3" fill="#4f6a5d"/>`},
+  towel:{nm:'수건 · 비품',em:'🧻',kw:['수건','비품','휴지','타월'],svg:
+    `<rect x="-24" y="-46" width="48" height="6" rx="3" fill="#9aa3ab"/>
+     <rect x="-18" y="-42" width="16" height="30" rx="3" fill="#dfe6ea"/>
+     <rect x="2" y="-42" width="16" height="26" rx="3" fill="#cbd7dd"/>`},
+  boardgame:{nm:'보드게임',em:'🎲',kw:['보드게임','퍼즐','게임','전략','카드'],svg:
+    `<rect x="-26" y="-12" width="52" height="12" rx="2" fill="#c0655a"/>
+     <rect x="-22" y="-23" width="44" height="11" rx="2" fill="#5f7f9a"/>
+     <rect x="-18" y="-33" width="36" height="10" rx="2" fill="#d9a94e"/>
+     <rect x="6" y="-46" width="14" height="14" rx="3" fill="#f2f0eb" stroke="#8a8175" stroke-width="1.4"/>
+     <circle cx="13" cy="-39" r="2" fill="#3c4046"/>`},
+  clothes:{nm:'옷걸이 행어',em:'🧥',kw:['옷걸이','다림질','옷 개기','계절 옷','외투'],svg:
+    `<rect x="-30" y="-64" width="60" height="5" rx="2.5" fill="#9aa3ab"/>
+     <path d="M-26,0 l4,-59 M26,0 l-4,-59" stroke="#9aa3ab" stroke-width="4" fill="none"/>
+     ${[0,1,2].map(i=>`<path d="M${-16+i*16},-59 v6" stroke="#8a8175" stroke-width="2"/>
+     <path d="M${-22+i*16},-53 h12 l-2,30 h-8 Z" fill="${['#54637a','#8a7b6a','#5f7f5a'][i]}"/>`).join('')}`},
+  chair:{nm:'의자',em:'🪑',kw:['의자','앉기','자세','기립','휴식'],svg:
+    `<rect x="-18" y="-30" width="36" height="6" rx="3" fill="#c99a63"/>
+     <rect x="-18" y="-62" width="6" height="32" rx="3" fill="#a8814f"/>
+     <rect x="-18" y="-66" width="36" height="6" rx="3" fill="#c99a63"/>
+     <rect x="-16" y="-24" width="5" height="24" fill="#a8814f"/><rect x="11" y="-24" width="5" height="24" fill="#a8814f"/>`},
+  fan:{nm:'환풍기 · 선풍기',em:'🌀',kw:['선풍기','환풍','바람'],svg:
+    `<rect x="-3" y="-46" width="6" height="46" fill="#b9c0c6"/>
+     <ellipse cx="0" cy="-2" rx="16" ry="5" fill="#9aa3ab"/>
+     <circle cx="0" cy="-58" r="20" fill="none" stroke="#b9c0c6" stroke-width="3"/>
+     <circle cx="0" cy="-58" r="5" fill="#9aa3ab"/>`},
+  water:{nm:'물병',em:'💧',kw:['물','수분','음료'],svg:
+    `<rect x="-9" y="-34" width="18" height="34" rx="5" fill="#bcd8e8" stroke="#8fb3c7" stroke-width="1.4"/>
+     <rect x="-5" y="-42" width="10" height="9" rx="2" fill="#5f8aa3"/>`}
+};
+const OBJ_LIST=Object.keys(OBJS);
+/* 활동 이름에서 어떤 물건인지 짐작한다 */
+function guessObj(name){
+  const s=(name||'').toLowerCase();
+  for(const id of OBJ_LIST) if(OBJS[id].kw.some(k=>s.includes(k))) return id;
+  return '';
+}
+/* 바닥에 놓을 자리 — 가까운 줄부터 채워 서로 겹치지 않게 */
+const FLOOR_SLOTS=[
+  {x:62,y:234,s:.82},{x:338,y:234,s:.82},{x:104,y:208,s:.60},{x:296,y:208,s:.60},
+  {x:200,y:236,s:.86},{x:140,y:190,s:.46},{x:260,y:190,s:.46},{x:200,y:206,s:.58}
+];
 
 /* ---------- ④-5 공간 · 활동 렌더 ---------- */
 function renderHouse(){
@@ -1775,7 +1915,8 @@ function renderHouse(){
         <span class="em">${it.em}</span><span class="nm">${esc(it.nm)}</span>
         ${editMode
           ? `<span class="stepper"><button data-mm="-" data-it2="${it.id}">−</button><b>${it.m?it.m+'분':'링크'}</b><button data-mm="+" data-it2="${it.id}">＋</button></span>
-             <button class="btn sm" data-url="${it.id}" style="margin-top:5px;width:100%">${link?'링크 수정':'＋ 링크'}</button>`
+             <button class="btn sm" data-obj="${it.id}" style="margin-top:5px;width:100%">${it.obj?OBJS[it.obj].em+' 물건 바꾸기':'＋ 물건'}</button>
+             <button class="btn sm" data-url="${it.id}" style="margin-top:4px;width:100%">${link?'링크 수정':'＋ 링크'}</button>`
           : `<span class="mi">${link?(it.m?it.m+'분 · 링크':'바로 열기'):it.m+'분'}</span>`}
       </div>`;
     }).join('')+`<button class="pod add" id="addItem">＋ 활동 추가</button>`;
@@ -1791,6 +1932,7 @@ function renderHouse(){
       logEntry({key:`${sp.id}:${it.id}`,sp:sp.id,nm:it.nm,em:it.em,m:it.m||0,loc:sp.name});
       Sound.prime(); toast(`${it.nm} 기록했습니다`); return;
     }
+    if(e.target.dataset.obj!==undefined){ editObj(sp,it); return }
     if(e.target.dataset.url!==undefined){ editLink(sp,it); return }
     const mm=e.target.dataset.mm;
     if(mm){ const step=it.m<10?1:5;
@@ -1841,6 +1983,24 @@ function binMini(spId){
       ${items.length>8?`<span class="c" style="color:var(--ink-3)">외 ${items.length-8}개</span>`:''}</div>
   </div>`;
 }
+function editObj(sp,it){
+  openModal(`<h3>${it.em} ${esc(it.nm)}</h3>
+    <div class="desc">방 그림에 놓을 물건을 고르세요. 놓으면 그림에서 바로 눌러 실행할 수 있습니다.</div>
+    <div class="field"><label>물건</label>
+      <select id="oS" style="width:100%;border:1px solid var(--line-2);border-radius:10px;padding:9px 11px;background:var(--bg)">
+        <option value="">놓지 않음</option>
+        ${OBJ_LIST.map(k=>`<option value="${k}" ${k===it.obj?'selected':''}>${OBJS[k].em} ${esc(OBJS[k].nm)}</option>`).join('')}
+      </select></div>
+    <div style="font-size:11.5px;color:var(--ink-3);line-height:1.6">바닥에는 최대 ${FLOOR_SLOTS.length}개까지 놓입니다. 그 이상은 아래 목록에만 남습니다.</div>
+    <div class="foot"><button class="btn" data-x="c">취소</button><button class="btn primary" data-x="ok">저장</button></div>`);
+  $('#modal [data-x="c"]').addEventListener('click',closeModal);
+  $('#modal [data-x="ok"]').addEventListener('click',()=>{
+    const v=$('#oS').value;
+    if(v) it.obj=v; else delete it.obj;
+    Store.save(); closeModal(); renderHouse();
+    toast(v?`${OBJS[v].nm}을(를) 놓았습니다`:'물건을 치웠습니다');
+  });
+}
 function editLink(sp,it){
   openModal(`<h3>${it.em} ${esc(it.nm)}</h3>
     <div class="desc">주소를 넣으면 누를 때 그 사이트가 새 탭으로 열립니다. 시간을 0분으로 두면 타이머 없이 링크만 엽니다.</div>
@@ -1866,14 +2026,23 @@ function openAddItem(){
       <div><label>아이콘</label><input id="fEm" value="⭐" maxlength="4"></div>
       <div><label>이름</label><input id="fNm" placeholder="예: 실내자전거" maxlength="24"></div>
     </div>
-    <div class="field"><label>타이머 시간 (분)</label><input id="fM" type="number" min="1" max="240" value="10"></div>
+    <div class="field"><label>타이머 시간 (분)</label><input id="fM" type="number" min="0" max="240" value="10"></div>
+    <div class="field"><label>방에 놓을 물건 <span style="font-weight:600;color:var(--ink-3)">— 이름을 쓰면 자동으로 골라집니다</span></label>
+      <select id="fO" style="width:100%;border:1px solid var(--line-2);border-radius:10px;padding:9px 11px;background:var(--bg)">
+        <option value="">놓지 않음</option>
+        ${OBJ_LIST.map(k=>`<option value="${k}">${OBJS[k].em} ${esc(OBJS[k].nm)}</option>`).join('')}
+      </select></div>
     <div class="foot"><button class="btn" data-x="c">취소</button><button class="btn primary" data-x="ok">추가</button></div>`);
+  const auto=()=>{ const g=guessObj($('#fNm').value); if(g) $('#fO').value=g; };
+  $('#fNm').addEventListener('input',auto);
   $('#modal [data-x="c"]').addEventListener('click',closeModal);
   $('#modal [data-x="ok"]').addEventListener('click',()=>{
     const nm=$('#fNm').value.trim(); if(!nm){ $('#fNm').focus(); return }
+    const obj=$('#fO').value;
     Store.items(s.id).push({id:'u'+Date.now().toString(36),em:$('#fEm').value.trim()||'⭐',nm,
-      m:Math.min(240,Math.max(1,+$('#fM').value||10))});
-    Store.save(); closeModal(); renderHouse(); toast('추가했습니다');
+      m:Math.min(240,Math.max(0,+$('#fM').value||0)), ...(obj?{obj}:{})});
+    Store.save(); closeModal(); renderHouse();
+    toast(obj?`추가했습니다 · 방에 ${OBJS[obj].nm}이(가) 생겼습니다`:'추가했습니다');
   });
   setTimeout(()=>$('#fNm').focus(),50);
 }
