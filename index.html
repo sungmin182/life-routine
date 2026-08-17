@@ -77,8 +77,11 @@ header.top{
 #warn{margin-top:16px;padding:11px 16px;border-radius:12px;font-size:13px;line-height:1.6;
   background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);color:var(--ink)}
 
+/* 그리드 칸은 반드시 minmax(0,…) — 안 그러면 평면도 SVG의 고유 너비가 칸을 밀어낸다 */
 .main{display:grid;grid-template-columns:520px minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
-@media (max-width:1240px){.main{grid-template-columns:1fr}}
+@media (max-width:1240px){.main{grid-template-columns:minmax(0,1fr)}}
+.main>section{min-width:0}
+svg{max-width:100%}
 
 /* ============================================================
    LAYER 2 — 신체 (40대 남성 + 콜아웃 라벨)
@@ -213,7 +216,8 @@ header.top{
    LAYER 3 — 집 (평면도 + 1인칭 뷰)
    ============================================================ */
 .house{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:14px;padding:14px 18px 18px}
-@media (max-width:880px){.house{grid-template-columns:1fr}}
+@media (max-width:880px){.house{grid-template-columns:minmax(0,1fr)}}
+.house>div{min-width:0}
 .planbox{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--gray-soft);position:relative}
 #planSvg{width:100%;height:auto;display:block;touch-action:none}
 .rm-fill{transition:fill .2s}
@@ -284,7 +288,8 @@ header.top{
 .act .min{font-size:11.5px;color:var(--ink-3);font-weight:600;font-variant-numeric:tabular-nums}
 .act .done{font-size:11px;font-weight:800;color:var(--ok)}
 .dash{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;margin-top:16px}
-@media (max-width:900px){.dash{grid-template-columns:1fr}}
+@media (max-width:900px){.dash{grid-template-columns:minmax(0,1fr)}}
+.dash>section{min-width:0}
 .hm{display:flex;gap:9px;padding:16px 18px 20px;align-items:flex-end;overflow-x:auto}
 .hm-col{flex:1 1 0;min-width:34px;display:flex;flex-direction:column;align-items:center;gap:6px}
 .hm-bar{width:100%;border-radius:8px;background:var(--gray-soft);display:flex;align-items:flex-end;height:110px;overflow:hidden}
@@ -338,6 +343,93 @@ header.top{
 .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);z-index:95;background:var(--ink);color:var(--bg);
   padding:10px 18px;border-radius:99px;font-size:13px;font-weight:700;opacity:0;transition:.25s;pointer-events:none;box-shadow:var(--shadow-lg)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+/* ============================================================
+   모바일 (≤760px)
+   ============================================================ */
+#legend{display:none}
+@media (max-width:760px){
+  body{padding-bottom:170px}
+  .wrap{padding:0 12px}
+  .top-in{padding:6px 12px;gap:7px;row-gap:6px}
+  .logo{font-size:15px;padding:3px 7px 3px 3px}
+  .logo .dot{width:22px;height:22px;font-size:12px}
+  .seg{margin-left:auto;order:2;padding:2px}
+  .seg button{padding:5px 13px;font-size:12.5px}
+  .kpis{order:4;width:100%;margin-left:0;gap:5px}
+  .kpi{flex:1;justify-content:center;padding:2px 4px;gap:4px;border-radius:9px}
+  .kpi b{font-size:14px} .kpi span{font-size:9.5px}
+  #btnSync{order:3;padding:5px 9px}
+  /* 내보내기·불러오기는 동기화 화면 안으로 — 헤더를 얇게 유지한다 */
+  #btnExport,#btnImport{display:none}
+  .btn.sm{padding:7px 12px;font-size:12.5px}
+  .p-head{flex-wrap:wrap;padding:13px 14px 0}
+  .p-head .right{width:auto}
+
+  /* 신체 — 옆 라벨 대신 아래 알약 목록 */
+  #bodyStage{padding:2px 4px 6px}
+  #legend{display:flex;flex-wrap:wrap;gap:5px;padding:0 14px 12px}
+  #legend button{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:12.5px;
+    font-weight:700;color:var(--ink-2);background:var(--panel)}
+  #legend button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  #shapeBox{padding:2px 14px 14px}
+  .numrow{grid-template-columns:1fr 1fr}
+  .num input{font-size:17px}
+  .bmibar .pin{font-size:11px}
+
+  /* 집 */
+  .house{padding:12px 14px 16px;gap:12px}
+  .spacebar{padding:10px 14px 0}
+  .sbtn{padding:8px 13px;font-size:13px}
+  .planhint{font-size:10px;left:8px;bottom:6px}
+  .pods{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+  .pod{padding:9px 6px 8px}
+  .pod .em{font-size:22px} .pod .nm{font-size:11.5px} .pod .mi{font-size:10.5px}
+
+  /* 상세 */
+  .d-head{padding:16px 14px 0;gap:11px}
+  .d-head h2{font-size:18px}
+  .cards{padding:13px 14px 4px;gap:10px;grid-template-columns:minmax(0,1fr)}
+  .acts{padding:6px 14px 16px}
+  .act{padding:10px 14px 10px 11px}
+
+  /* 대시보드 · 보관함 */
+  .hm{padding:14px 12px 16px;gap:6px}
+  .rank{padding:10px 14px 16px}
+  .binbar{padding:10px 14px 4px}
+  .binbar button{padding:7px 13px}
+  .tblwrap{padding:6px 14px 16px}
+  #dbQ{width:110px !important}
+  #wChart{padding:8px 12px 14px}
+  #wChart svg{height:150px}
+
+  /* 타이머는 하단 바로 */
+  #timer{left:12px;right:12px;bottom:12px;width:auto;padding:13px 15px;
+    display:none;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+  #timer.on{display:grid}
+  .dial{width:86px;height:86px;margin:0}
+  .dial .txt{font-size:21px}
+  #timer .lbl,#timer .loc{text-align:left}
+  #timer .loc{margin-bottom:8px}
+  #timer .ctl{grid-column:2}
+  #timer .info{grid-column:2;grid-row:1}
+  .toast{bottom:150px}
+  .chips .c{padding:7px 11px;font-size:12.5px}
+  .tabs2 button{padding:6px 12px;font-size:12.5px}
+  .rank-row .acts2{opacity:1}                 /* 터치엔 hover가 없다 → 항상 보이게 */
+  .rank-row .acts2 button{padding:5px 9px}
+  .logrow{padding:7px 0}
+  .logrow .x{padding:5px 9px}
+  /* 터치엔 hover가 없다 → 아이콘만 항상 표시(이름표는 겹치므로 숨김) */
+  .fspot .fl{opacity:1;font-size:11px}
+  .fspot .fl i{display:none}
+  .fspot{border-color:rgba(0,0,0,.14);background:rgba(255,255,255,.16)}
+  .fspot.has{border-color:rgba(33,195,107,.9);background:rgba(33,195,107,.2)}
+  footer{padding:0 14px}
+}
+@media (max-width:400px){
+  .pods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi span{display:none}
+}
 footer{max-width:1520px;margin:24px auto 0;padding:0 20px;font-size:12px;color:var(--ink-3);line-height:1.7}
 footer b{color:var(--ink-2)}
 kbd{background:var(--gray-soft);border:1px solid var(--line-2);border-radius:5px;padding:1px 5px;font-size:11px;font-family:var(--font);font-weight:700;color:var(--ink-2)}
@@ -395,6 +487,7 @@ kbd{background:var(--gray-soft);border:1px solid var(--line-2);border-radius:5px
         </div>
       </div>
       <div id="bodyStage"></div>
+      <div id="legend"></div>
       <div id="shapeBox"></div>
       <div id="fitBox" style="display:none"></div>
     </section>
@@ -412,7 +505,7 @@ kbd{background:var(--gray-soft);border:1px solid var(--line-2);border-radius:5px
         <div>
           <div class="planbox">
             <div id="planWrap"></div>
-            <div class="planhint"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 로 이동 · 방을 클릭하면 걸어갑니다</div>
+            <div class="planhint" id="planHint"></div>
           </div>
         </div>
         <div>
@@ -460,7 +553,7 @@ kbd{background:var(--gray-soft);border:1px solid var(--line-2);border-radius:5px
 <div id="tip"></div>
 
 <div id="timer">
-  <div class="lbl" id="tLbl">—</div><div class="loc" id="tLoc">—</div>
+  <div class="info"><div class="lbl" id="tLbl">—</div><div class="loc" id="tLoc">—</div></div>
   <div class="dial">
     <svg viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="52"/><circle class="prg" id="tPrg" cx="60" cy="60" r="52"/></svg>
     <div class="txt" id="tTxt">00:00</div>
@@ -1011,12 +1104,17 @@ const cx=s=>(s.x+s.x2)/2, cy=s=>(s.y+s.y2)/2;
 let selectedPart='brain', editMode=false, curSpace='living', rankTab='rank';
 
 /* ---------- ④-1 40대 남성 ---------- */
+/* 좁은 화면에서는 옆 라벨을 빼고 인물을 크게 — 라벨은 아래 알약 목록으로 */
+const isNarrow=()=>matchMedia('(max-width:760px)').matches;
+
 function bodySvg(){
   const P=Object.fromEntries(BODY.map(p=>[p.id,p]));
+  const narrow=isNarrow();
   const groups=HOTS.map(h=>{
     const p=P[h.id]; if(!p) return '';
     const hl=h.hs.replace(/<(ellipse|circle)/g,'<$1 class="hl"');
     const hot=h.hs.replace(/<(ellipse|circle)/g,'<$1 class="hot"');
+    if(narrow) return `<g class="hg" data-part="${h.id}">${hl}${hot}</g>`;
     const L=h.side==='L', label=h.nm||p.name;
     const chipW=Math.max(88,label.length*14+42), chipX=L?14:620-14-chipW;
     const tx=L?chipX+12:chipX+chipW-12, anchor=L?'start':'end';
@@ -1043,7 +1141,8 @@ function bodySvg(){
   const w=BW*f.s,h=BH*f.s;
   const x=BX+f.x-(w-BW)/2, y=BY+f.y-(h-BH)/2;
   const IM=(href,extra='')=>`<image href="${href}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" preserveAspectRatio="xMidYMid meet" ${extra}/>`;
-  return `<svg id="bodySvg" viewBox="0 0 620 700" role="img" aria-label="40대 남성 신체 관리 지도">
+  const vb = narrow ? '142 8 336 684' : '0 0 620 700';
+  return `<svg id="bodySvg" viewBox="${vb}" role="img" aria-label="40대 남성 신체 관리 지도">
     <defs><radialGradient id="gl" cx=".5" cy=".46" r=".55">
       <stop offset="0" stop-color="#e88b3f" stop-opacity=".12"/><stop offset="1" stop-color="#e88b3f" stop-opacity="0"/>
     </radialGradient></defs>
@@ -1065,6 +1164,14 @@ function renderBody(){
     g.addEventListener('click',()=>{selectedPart=id;syncPart();renderDetail()});
     g.style.cursor='pointer';
   });
+  /* 좁은 화면용 라벨 목록 */
+  $('#legend').innerHTML = isNarrow()
+    ? BODY.map(p=>`<button data-part="${p.id}" class="${p.id===selectedPart?'on':''}">${p.emoji} ${esc((HOTS.find(h=>h.id===p.id)||{}).nm||p.name)}</button>`).join('')
+    : '';
+  $$('#legend button').forEach(b=>b.addEventListener('click',()=>{
+    selectedPart=b.dataset.part; syncPart(); renderDetail();
+    $('#detail').scrollIntoView({behavior:'smooth',block:'start'});
+  }));
   syncPart(); renderShape(); renderFit();
 }
 /* ---- 체형 패널: 키·몸무게·허리·목표 + BMI 막대 ---- */
@@ -1168,7 +1275,10 @@ function renderFit(){
     Store.s.avatarImg=null; Store.save(); renderBody(); toast('기본 인물로 되돌렸습니다');
   });
 }
-const syncPart=()=>$$('#bodyStage .hg').forEach(g=>g.classList.toggle('on',g.dataset.part===selectedPart));
+const syncPart=()=>{
+  $$('#bodyStage .hg').forEach(g=>g.classList.toggle('on',g.dataset.part===selectedPart));
+  $$('#legend button').forEach(b=>b.classList.toggle('on',b.dataset.part===selectedPart));
+};
 function showTip(e,id){
   const p=BODY.find(x=>x.id===id); if(!p) return;
   const t=$('#tip'); t.innerHTML=`<b>${p.emoji} ${esc(p.name)}</b>${esc(p.tip)}`;
@@ -1333,9 +1443,14 @@ function planSvg(){
       <rect class="rm-hit" data-sp="${s.id}" x="${s.x+8}" y="${s.y+8}" width="${s.x2-s.x-16}" height="${s.y2-s.y-16}"><title>${esc(s.name)}</title></rect>
       <rect class="rm-out" x="${s.x+4}" y="${s.y+4}" width="${s.x2-s.x-8}" height="${s.y2-s.y-8}" rx="3"/>
     </g>`).join('');
+  /* 좁은 화면에서는 이름이 8px까지 줄어 못 읽는다 → 아이콘만 크게. 이름은 위 탭바가 알려준다 */
+  const nar=isNarrow();
   const labels=SPACES.map(s=>{
     const n=Stats.spaceToday(s.id);
-    return `<text class="rm-lab ${s.noAct?'sm':''}" x="${cx(s)}" y="${s.type==='balcony'?s.y+26:cy(s)+38}" text-anchor="middle">${s.emoji} ${esc(s.name)}${n?' · '+n:''}</text>`;
+    const y=s.type==='balcony' ? s.y+(nar?46:26) : cy(s)+(nar?14:38);
+    const txt = nar ? `${s.emoji}${n?' '+n:''}` : `${s.emoji} ${esc(s.name)}${n?' · '+n:''}`;
+    return `<text class="rm-lab ${s.noAct?'sm':''}" style="font-size:${nar?(s.noAct?34:46):(s.noAct?13:15)}px"
+      x="${cx(s)}" y="${y}" text-anchor="middle">${txt}</text>`;
   }).join('');
   return `<svg id="planSvg" viewBox="0 0 ${PLAN.vw} ${PLAN.vh}" role="img" aria-label="집 평면도">
     <rect width="${PLAN.vw}" height="${PLAN.vh}" fill="#efe9df"/>
@@ -1541,6 +1656,9 @@ function renderHouse(){
     return `<button class="sbtn ${x.id===curSpace?'on':''}" data-sp="${x.id}">${x.emoji} ${esc(x.name)}${n?`<span class="n">${n}</span>`:''}</button>`;
   }).join('');
   $('#planWrap').innerHTML=planSvg();
+  $('#planHint').innerHTML = isNarrow()
+    ? '방을 탭하면 걸어갑니다'
+    : '<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 로 이동 · 방을 클릭하면 걸어갑니다';
   drawAvatar();
   $('#fpvWrap').innerHTML=fpvSvg(s)+(s.noAct?'':fpvOverlay(s));
   $('#fpvTag').innerHTML=`${s.emoji} ${esc(s.name)}`;
@@ -1946,6 +2064,12 @@ addEventListener('keydown',e=>{
 });
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 addEventListener('blur',()=>keys.clear());
+/* 세로↔가로 전환처럼 폭이 기준선을 넘나들 때만 다시 그린다 */
+let wasNarrow=isNarrow();
+addEventListener('resize',()=>{
+  const n=isNarrow(); if(n===wasNarrow) return;
+  wasNarrow=n; renderBody(); renderHouse();
+});
 addEventListener('beforeunload',e=>{ if(Timer.rec){ e.preventDefault(); e.returnValue='' } });
 
 /* ---------- 부팅 ---------- */
@@ -1983,11 +2107,17 @@ function openSync(){
     </div>
     ${Sync.on()?`<div style="font-size:12px;color:var(--ink-2);font-weight:600;margin-top:8px">
       상태 · 연결됨${c.lastAt?` · 마지막 동기화 ${new Date(c.lastAt).toLocaleString('ko-KR')}`:''}</div>`:''}
+    <div style="display:flex;gap:8px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-2)">
+      <button class="btn sm" data-x="exp" style="flex:1">파일로 내보내기</button>
+      <button class="btn sm" data-x="imp" style="flex:1">파일에서 불러오기</button>
+    </div>
     <div class="foot">
       ${Sync.on()?'<button class="btn" data-x="off">연결 해제</button>':''}
       <button class="btn" data-x="c">닫기</button>
       <button class="btn primary" data-x="ok">${Sync.on()?'지금 동기화':'연결하기'}</button>
     </div>`);
+  $('#modal [data-x="exp"]').addEventListener('click',()=>{ closeModal(); $('#btnExport').click() });
+  $('#modal [data-x="imp"]').addEventListener('click',()=>{ closeModal(); $('#fileIn').click() });
   $('#modal [data-x="c"]').addEventListener('click',closeModal);
   const off=$('#modal [data-x="off"]');
   if(off) off.addEventListener('click',()=>{
