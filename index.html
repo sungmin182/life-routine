@@ -200,6 +200,45 @@ svg{max-width:100%}
 .tabs2 button{font-size:12px;font-weight:700;color:var(--ink-3);padding:3px 10px;border-radius:8px}
 .tabs2 button.on{background:var(--gray-soft);color:var(--ink)}
 
+/* 오늘 할 일 · 정리 보고 */
+.duewrap{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px 18px}
+.due{display:flex;align-items:center;gap:9px;border:1.6px solid #6f9fd8;background:#e9f1fb;color:#1f4d80;
+  border-radius:12px;padding:9px 14px 9px 11px;font-size:13px;font-weight:700;transition:.15s}
+.due:hover{border-color:#3d7ec0;background:#dbe9f8}
+.due .em{font-size:17px}
+.due .lo{font-size:11px;font-weight:600;opacity:.75}
+.due .ct{font-size:11.5px;font-weight:800;background:#fff;border-radius:99px;padding:1px 8px;font-variant-numeric:tabular-nums}
+.due.ok{border-color:color-mix(in srgb,var(--ok) 55%,transparent);background:var(--ok-soft);color:var(--ok)}
+.due.ok .ct{background:var(--ok);color:#fff}
+@media (prefers-color-scheme:dark){
+  .due{border-color:#4b73a8;background:#1e2a3a;color:#a8c8ea}
+  .due:hover{background:#25344a}
+  .due .ct{background:#0f1721;color:#cfe0f2}
+}
+#brief .bcard{margin-top:16px;border-radius:16px;padding:16px 18px;border:1px solid var(--line);
+  background:var(--panel);box-shadow:var(--shadow)}
+#brief .bh{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:800;letter-spacing:-.03em}
+#brief .bh .tag{font-size:11px;font-weight:800;padding:2px 9px;border-radius:99px;background:var(--brand);color:#fff}
+#brief .bh button{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--ink-3);padding:4px 10px;border-radius:8px}
+#brief .bh button:hover{background:var(--gray-soft);color:var(--ink)}
+#brief .bl{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+#brief .br{display:flex;align-items:center;gap:9px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+#brief .br:last-child{border-bottom:0}
+#brief .br .nm{font-weight:700;flex:1}
+#brief .br .lo{font-size:11.5px;color:var(--ink-3);font-weight:600}
+#brief .br .st{font-size:11.5px;font-weight:800;padding:2px 9px;border-radius:99px;white-space:nowrap;font-variant-numeric:tabular-nums}
+#brief .br .st.ok{background:var(--ok-soft);color:var(--ok)}
+#brief .br .st.no{background:#fbe3df;color:#b8402f}
+@media (prefers-color-scheme:dark){#brief .br .st.no{background:#40251f;color:#e78878}}
+#brief .bnone{font-size:13px;color:var(--ink-2);margin-top:8px}
+.gbtn{display:flex;gap:4px;margin-top:5px;justify-content:center;flex-wrap:wrap}
+.gday{width:26px;height:26px;border-radius:8px;border:1px solid var(--line-2);font-size:11.5px;font-weight:800;color:var(--ink-3)}
+.gday.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pod.due2{border-color:#6f9fd8;background:#e9f1fb}
+.pod.due2 .nm{color:#1f4d80}
+.pod.met{border-color:color-mix(in srgb,var(--ok) 55%,transparent);background:var(--ok-soft)}
+@media (prefers-color-scheme:dark){.pod.due2{border-color:#4b73a8;background:#1e2a3a}.pod.due2 .nm{color:#a8c8ea}}
+
 /* 감량 플랜 */
 .planwrap{padding:14px 18px 20px}
 .prog{margin-bottom:12px}
@@ -530,6 +569,11 @@ kbd{background:var(--gray-soft);border:1px solid var(--line-2);border-radius:5px
   </div>
 
   <div id="viewHome">
+  <div id="brief"></div>
+  <section class="panel" id="duePanel" style="margin-top:16px;display:none">
+    <div class="p-head"><h2>오늘 할 일</h2><span class="sub" id="dueSub"></span></div>
+    <div class="duewrap" id="dueList"></div>
+  </section>
   <div class="main">
     <!-- 신체 -->
     <section class="panel">
@@ -814,7 +858,7 @@ const DEFAULT_ITEMS={
   bath2:  [{em:'🚽',nm:'변기 청소',m:10,spot:'toilet'},{em:'🪞',nm:'세면대 · 거울',m:10,spot:'basin'},
            {em:'🧼',nm:'바닥 물때 제거',m:15,spot:'shower'},{em:'💨',nm:'환풍기 돌리기',m:30},{em:'🧻',nm:'수건 · 비품 교체',m:5,obj:'towel'}],
   closet: [{em:'👕',nm:'빨래 개기',m:20,obj:'dryrack'},{em:'🪡',nm:'옷 정리 · 비우기',m:30,obj:'clothes'},{em:'👞',nm:'신발 관리',m:15},{em:'🧥',nm:'계절 옷 교체',m:40},{em:'♨️',nm:'다림질',m:20}],
-  living: [{em:'🪜',nm:'천국의 계단',m:20,spot:'stairs'},{em:'📺',nm:'TV장 정리',m:10,spot:'tv'},
+  living: [{em:'🪜',nm:'천국의 계단',m:45,spot:'stairs',goal:{d:[1,2,3,4,5,6],n:1}},{em:'📺',nm:'TV장 정리',m:10,spot:'tv'},
            {em:'🛋️',nm:'소파 정리',m:10,spot:'sofa'},
            {em:'🧘',nm:'스트레칭 매트',m:10,obj:'mat'},{em:'🌀',nm:'폼롤러',m:8,obj:'roller'},
            {em:'🧹',nm:'바닥 청소',m:15,obj:'vacuum'},{em:'🪟',nm:'환기',m:10,obj:'purifier'},
@@ -825,7 +869,9 @@ const DEFAULT_ITEMS={
            {em:'🎲',nm:'가족 보드게임',m:45,obj:'boardgame'},{em:'🧩',nm:'퍼즐',m:30},{em:'♟️',nm:'전략 게임',m:40},{em:'📦',nm:'게임 정리',m:10},{em:'🍿',nm:'간식 · 대화 타임',m:20}],
   balcony:[{em:'🏃',nm:'러닝머신',m:30,obj:'treadmill'},{em:'🚴',nm:'실내자전거',m:20,obj:'bike'},
            {em:'🏋️',nm:'아령 세트',m:20,obj:'dumbbell'},{em:'🪟',nm:'발코니 환기',m:10,spot:'window'},
-           {em:'🤸',nm:'철봉 · 턱걸이',m:10,obj:'pullup'},{em:'🧎',nm:'플랭크 · 코어',m:5,obj:'mat'},
+           {em:'🤸',nm:'철봉 · 턱걸이',m:10,obj:'pullup'},
+           {em:'🦵',nm:'근력 A일 · 하체+가슴',m:22,obj:'dumbbell',goal:{d:[1],n:1}},
+           {em:'💪',nm:'근력 B일 · 등+어깨+코어',m:22,goal:{d:[3],n:1}},{em:'🧎',nm:'플랭크 · 코어',m:5,obj:'mat'},
            {em:'🪢',nm:'줄넘기',m:10,obj:'rope'}]
 };
 
@@ -960,17 +1006,17 @@ const Store={
     }
     if(!Array.isArray(this.s.log)) this.s.log=[];
     /* 이미 저장된 목록에는 새로 추가된 기본 항목(링크 등)이 없다 → 한 번만 채워 넣는다 */
-    if(this.s.mig!==5){
+    if(this.s.mig!==6){
       for(const sp of SPACES){
         if(sp.noAct) continue;
         const cur=this.s.items[sp.id];
         (DEFAULT_ITEMS[sp.id]||[]).forEach((d,i)=>{
           const ex=cur.find(x=>x.nm===d.nm);
-          if(ex){ if(d.spot&&!ex.spot) ex.spot=d.spot; if(d.url&&!ex.url) ex.url=d.url; if(d.obj&&!ex.obj) ex.obj=d.obj }
+          if(ex){ if(d.spot&&!ex.spot) ex.spot=d.spot; if(d.url&&!ex.url) ex.url=d.url; if(d.obj&&!ex.obj) ex.obj=d.obj; if(d.goal&&!ex.goal) ex.goal=d.goal }
           else cur.push({id:'d'+i+'_'+sp.id,...d});     // 새로 생긴 기본 항목 보충
         });
       }
-      this.s.mig=5;
+      this.s.mig=6;
     }
     if(!this.s.objGuess){
       for(const sp of SPACES){ if(sp.noAct) continue;
@@ -1107,10 +1153,29 @@ const Sync={
     }catch(e){ syncChip('err'); toast('동기화 실패 · '+e.message) }
     finally{ this.busy=false }
   },
-  queue(){                                   // 변경 후 4초 뒤에 한 번만 올린다
+  queue(){                                   // 변경 후 잠시 뒤에 한 번만 올린다
     if(!this.on()||!this.cfg.auto) return;
+    this.pending=true;
     clearTimeout(this.timer);
-    this.timer=setTimeout(()=>this.sync(false),4000);
+    this.timer=setTimeout(()=>this.sync(false),1500);
+  },
+  /* 앱을 벗어나기 직전에 밀린 변경을 즉시 올린다.
+     폰에서 운동 끝내고 바로 브라우저를 닫으면 예약된 업로드가 죽어버리기 때문. */
+  flush(){
+    if(!this.on()||!this.pending) return;
+    clearTimeout(this.timer); this.timer=null;
+    const body=JSON.stringify(Store.s);
+    this.seal(Store.s).then(txt=>{
+      const payload=JSON.stringify({files:{'liferoutine.enc.json':{content:txt}}});
+      const url='https://api.github.com/gists/'+this.cfg.gist;
+      /* 탭이 닫히는 중에도 살아남도록 keepalive 요청으로 보낸다 */
+      fetch(url,{method:'PATCH',keepalive:true,headers:{
+        'Accept':'application/vnd.github+json','Authorization':'Bearer '+this.cfg.token,
+        'X-GitHub-Api-Version':'2022-11-28'},body:payload})
+        .then(()=>{ this.pending=false; this.cfg.lastAt=Date.now();
+                    this.cfg.lastRemote=Store.s.updatedAt||0; this.saveCfg() })
+        .catch(()=>{});
+    }).catch(()=>{});
   }
 };
 
@@ -1905,6 +1970,63 @@ function fpvOverlay(sp){
   return fixed+onfloor;
 }
 
+/* ============================================================================
+   요일별 목표 · 자동 정리
+   활동에 goal={d:[요일], n:횟수} 를 주면 그 요일에 «오늘 할 일»로 표시된다.
+   정리 보고는 브라우저가 꺼져 있어도 동작해야 하므로, 정해진 시각이 지난 뒤
+   앱을 처음 열었을 때 계산해서 보여주는 방식이다.
+   ========================================================================== */
+const DOW=['일','월','화','수','목','금','토'];
+const BRIEF_HOUR=6;                                   // 오전 6시 기준
+const dayKeyOf=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const shiftDay=(k,n)=>{const d=new Date(k+'T12:00:00'); d.setDate(d.getDate()+n); return dayKeyOf(d)};
+
+/* 특정 날짜의 목표 대비 실적 */
+function goalsOn(key){
+  const dw=new Date(key+'T12:00:00').getDay(), out=[];
+  for(const s of SPACES){
+    if(s.noAct) continue;
+    for(const it of Store.items(s.id)){
+      const g=it.goal; if(!g||!Array.isArray(g.d)||!g.d.includes(dw)) continue;
+      const need=Math.max(1,g.n||1);
+      const done=Store.s.log.filter(r=>r.key===`${s.id}:${it.id}`&&dayKey(r.ts)===key).length;
+      out.push({sp:s,it,need,done,ok:done>=need});
+    }
+  }
+  return out;
+}
+const dueToday=()=>goalsOn(TODAY());
+/* 지난 7일(직전 일요일~토요일) 집계 */
+function weekReport(){
+  const rows=new Map();
+  let end=new Date(); end.setDate(end.getDate()-1);      // 어제까지
+  for(let i=0;i<7;i++){
+    const k=dayKeyOf(end);
+    for(const g of goalsOn(k)){
+      const id=`${g.sp.id}:${g.it.id}`;
+      const c=rows.get(id)||{nm:g.it.nm,em:g.it.em,loc:g.sp.name,need:0,done:0,days:0,ok:0};
+      c.need+=g.need; c.done+=g.done; c.days++; if(g.ok) c.ok++;
+      rows.set(id,c);
+    }
+    end.setDate(end.getDate()-1);
+  }
+  return [...rows.values()].sort((a,b)=>(a.ok/a.days)-(b.ok/b.days));
+}
+/* 아직 안 보여준 정리가 있으면 무엇을 보여줄지 알려준다 */
+function pendingBrief(){
+  const now=new Date(), b=Store.s.brief||(Store.s.brief={});
+  if(now.getHours()<BRIEF_HOUR) return null;            // 오전 6시 전에는 아직
+  const today=TODAY();
+  /* 일요일 6시 이후 → 주간 정리 우선 */
+  if(now.getDay()===0 && b.lastWeekly!==today) return {kind:'week', key:today};
+  if(b.lastDaily!==today){
+    const y=shiftDay(today,-1);
+    if(goalsOn(y).length) return {kind:'day', key:today, target:y};
+    b.lastDaily=today;                                   // 목표가 없던 날은 조용히 넘어감
+  }
+  return null;
+}
+
 /* ---------- ④-4c 오브젝트 도감 ----------
    활동을 추가하면 방 그림에 실제 물건이 생긴다.
    좌표는 «바닥 가운데가 원점, 위쪽이 음수» 인 로컬 좌표. 배치할 때 translate+scale 한다. */
@@ -2046,16 +2168,21 @@ function renderHouse(){
     pods.className='pods'+(editMode?' editing':'');
     pods.innerHTML=Store.items(s.id).map(it=>{
       const key=`${s.id}:${it.id}`, n=Stats.countFor(key), link=!!it.url;
-      return `<div class="pod" data-it="${it.id}">
+      const dw=new Date().getDay();
+      const g=it.goal&&Array.isArray(it.goal.d)&&it.goal.d.includes(dw)?it.goal:null;
+      const gd=g?Stats.countToday(key):0, gn=g?Math.max(1,g.n||1):0;
+      const gcls=g?(gd>=gn?' met':' due2'):'';
+      return `<div class="pod${gcls}" data-it="${it.id}">
         ${editMode?`<button class="rm" data-rm="${it.id}" title="삭제">✕</button>`
           :`<button class="qk" data-qk="${it.id}" title="이미 했음 · 타이머 없이 바로 기록">✓</button>${n?`<span class="cnt">${n}</span>`:''}`}
         ${link&&!editMode?'<span class="lnk">↗</span>':''}
         <span class="em">${it.em}</span><span class="nm">${esc(it.nm)}</span>
         ${editMode
           ? `<span class="stepper"><button data-mm="-" data-it2="${it.id}">−</button><b>${it.m?it.m+'분':'링크'}</b><button data-mm="+" data-it2="${it.id}">＋</button></span>
-             <button class="btn sm" data-obj="${it.id}" style="margin-top:5px;width:100%">${it.obj?OBJS[it.obj].em+' 물건 바꾸기':'＋ 물건'}</button>
+             <button class="btn sm" data-goal="${it.id}" style="margin-top:5px;width:100%">${it.goal?'📅 '+it.goal.d.map(i=>DOW[i]).join(''):'＋ 요일 목표'}</button>
+             <button class="btn sm" data-obj="${it.id}" style="margin-top:4px;width:100%">${it.obj?OBJS[it.obj].em+' 물건 바꾸기':'＋ 물건'}</button>
              <button class="btn sm" data-url="${it.id}" style="margin-top:4px;width:100%">${link?'링크 수정':'＋ 링크'}</button>`
-          : `<span class="mi">${link?(it.m?it.m+'분 · 링크':'바로 열기'):it.m+'분'}</span>`}
+          : `<span class="mi">${link?(it.m?it.m+'분 · 링크':'바로 열기'):it.m+'분'}${g?` · 오늘 ${gd}/${gn}`:''}</span>`}
       </div>`;
     }).join('')+`<button class="pod add" id="addItem">＋ 활동 추가</button>`;
     pods.insertAdjacentHTML('beforeend',binMini(s.id));
@@ -2070,6 +2197,7 @@ function renderHouse(){
       logEntry({key:`${sp.id}:${it.id}`,sp:sp.id,nm:it.nm,em:it.em,m:it.m||0,loc:sp.name});
       Sound.prime(); toast(`${it.nm} 기록했습니다`); return;
     }
+    if(e.target.dataset.goal!==undefined){ editGoal(sp,it); return }
     if(e.target.dataset.obj!==undefined){ editObj(sp,it); return }
     if(e.target.dataset.url!==undefined){ editLink(sp,it); return }
     const mm=e.target.dataset.mm;
@@ -2274,6 +2402,81 @@ function openAddInv(){
   });
   setTimeout(()=>$('#iN').focus(),50);
 }
+/* ---------- 오늘 할 일 · 정리 보고 ---------- */
+function renderDue(){
+  const list=dueToday();
+  $('#duePanel').style.display = list.length?'':'none';
+  if(!list.length) return;
+  const ok=list.filter(x=>x.ok).length;
+  $('#dueSub').textContent=`${DOW[new Date().getDay()]}요일 · ${ok}/${list.length} 완료`;
+  $('#dueList').innerHTML=list.map((x,i)=>`
+    <button class="due ${x.ok?'ok':''}" data-i="${i}">
+      <span class="em">${x.it.em}</span>
+      <span>${esc(x.it.nm)}<span class="lo"> · ${esc(x.sp.name)}</span></span>
+      <span class="ct">${x.done}/${x.need}</span>
+    </button>`).join('');
+  $$('#dueList .due').forEach(b=>b.addEventListener('click',()=>{
+    const x=list[+b.dataset.i];
+    curSpace=x.sp.id; me.x=cx(x.sp); me.y=cy(x.sp); path=[];
+    renderHouse(); runItem(x.sp,x.it);
+  }));
+}
+function renderBrief(){
+  const p=pendingBrief(), box=$('#brief');
+  if(!p){ box.innerHTML=''; return }
+  if(p.kind==='week'){
+    const rows=weekReport();
+    box.innerHTML=`<div class="bcard">
+      <div class="bh"><span class="tag">주간 정리</span> 지난 7일 목표 달성
+        <button data-x="ok">확인</button></div>
+      ${rows.length?`<div class="bl">${rows.map(r=>`
+        <div class="br"><span>${r.em}</span><span class="nm">${esc(r.nm)}<span class="lo"> · ${esc(r.loc)}</span></span>
+          <span class="st ${r.ok===r.days?'ok':'no'}">${r.ok}/${r.days}일 · ${r.done}/${r.need}회</span></div>`).join('')}</div>`
+        :`<div class="bnone">지난주에 설정된 요일 목표가 없습니다.</div>`}
+    </div>`;
+  }else{
+    const miss=goalsOn(p.target).filter(x=>!x.ok);
+    box.innerHTML=`<div class="bcard">
+      <div class="bh"><span class="tag">어제 정리</span> ${p.target.slice(5)} ${DOW[new Date(p.target+'T12:00:00').getDay()]}요일
+        <button data-x="ok">확인</button></div>
+      ${miss.length?`<div class="bl">${miss.map(x=>`
+        <div class="br"><span>${x.it.em}</span><span class="nm">${esc(x.it.nm)}<span class="lo"> · ${esc(x.sp.name)}</span></span>
+          <span class="st no">${x.done}/${x.need}회</span></div>`).join('')}</div>`
+        :`<div class="bnone">어제 목표를 모두 채우셨습니다. 좋습니다.</div>`}
+    </div>`;
+  }
+  $('#brief [data-x="ok"]').addEventListener('click',()=>{
+    const b=Store.s.brief||(Store.s.brief={});
+    if(p.kind==='week') b.lastWeekly=p.key; else b.lastDaily=p.key;
+    Store.save(); renderBrief();
+  });
+}
+/* 요일 목표 설정 */
+function editGoal(sp,it){
+  const g=it.goal||{d:[],n:1};
+  openModal(`<h3>${it.em} ${esc(it.nm)}</h3>
+    <div class="desc">정한 요일이 되면 «오늘 할 일»에 파란색으로 표시됩니다. 채우면 초록으로 바뀝니다.</div>
+    <div class="field"><label>요일</label>
+      <div class="gbtn" id="gD">${DOW.map((d,i)=>`<button class="gday ${g.d.includes(i)?'on':''}" data-i="${i}">${d}</button>`).join('')}</div></div>
+    <div class="field"><label>그 날 목표 횟수</label><input id="gN" type="number" min="1" max="20" value="${g.n||1}"></div>
+    <div class="foot"><button class="btn" data-x="c">취소</button>
+      ${it.goal?'<button class="btn" data-x="d">목표 삭제</button>':''}
+      <button class="btn primary" data-x="ok">저장</button></div>`);
+  const sel=new Set(g.d);
+  $$('#gD .gday').forEach(b=>b.addEventListener('click',()=>{
+    const i=+b.dataset.i; sel.has(i)?sel.delete(i):sel.add(i); b.classList.toggle('on');
+  }));
+  $('#modal [data-x="c"]').addEventListener('click',closeModal);
+  const del=$('#modal [data-x="d"]');
+  if(del) del.addEventListener('click',()=>{ delete it.goal; Store.save(); closeModal(); renderHouse(); renderDue(); toast('목표를 지웠습니다') });
+  $('#modal [data-x="ok"]').addEventListener('click',()=>{
+    if(!sel.size){ toast('요일을 하나 이상 골라주세요'); return }
+    it.goal={d:[...sel].sort(),n:Math.min(20,Math.max(1,+$('#gN').value||1))};
+    Store.save(); closeModal(); renderHouse(); renderDue();
+    toast(`${it.goal.d.map(i=>DOW[i]).join('·')} · ${it.goal.n}회로 설정했습니다`);
+  });
+}
+
 /* ---------- 감량 플랜 ---------- */
 function planChecks(){
   const k=TODAY();
@@ -2472,7 +2675,7 @@ Timer.onDone=rec=>{
       <button class="btn primary" data-x="close">좋아요</button></div></div>`);
   $('#modal [data-x="again"]').addEventListener('click',()=>{closeModal();launch(rec)});
   $('#modal [data-x="close"]').addEventListener('click',closeModal);
-  renderHouse(); renderDetail(); renderDash();
+  renderHouse(); renderDetail(); renderDash(); renderDue();
 };
 $('#tPause').addEventListener('click',()=>Timer.running?Timer.pause():Timer.resume());
 /* 중간에 끝내도 한 만큼은 기록한다 */
@@ -2575,7 +2778,7 @@ addEventListener('resize',()=>{
 addEventListener('beforeunload',e=>{ if(Timer.rec){ e.preventDefault(); e.returnValue='' } });
 
 /* ---------- 부팅 ---------- */
-function renderAll(){ renderBody(); renderHouse(); renderDetail(); renderDash(); renderWeight();
+function renderAll(){ renderBody(); renderHouse(); renderDetail(); renderDash(); renderWeight(); renderDue(); renderBrief();
   if($('#viewDb').style.display!=='none') renderDb(); }
 
 /* ---------- 동기화 UI ---------- */
@@ -2725,7 +2928,11 @@ buildWalk();
 renderAll();
 Sync.load(); syncChip();
 if(Sync.on()) Sync.sync(false);                 // 켤 때 다른 기기의 변경사항을 먼저 받아온다
-addEventListener('visibilitychange',()=>{ if(!document.hidden&&Sync.on()&&Sync.cfg.auto) Sync.sync(false) });
+addEventListener('visibilitychange',()=>{
+  if(document.hidden) Sync.flush();                       // 나갈 때: 밀린 것 즉시 올림
+  else if(Sync.on()&&Sync.cfg.auto) Sync.sync(false);     // 돌아올 때: 다른 기기 변경 받아옴
+});
+addEventListener('pagehide',()=>Sync.flush());
 /* 인물 이미지를 캔버스로 읽어 체형 변형 준비 — 끝나면 몸만 다시 그린다 */
 Morph.init(()=>{ renderBody() });
 requestAnimationFrame(tick);
