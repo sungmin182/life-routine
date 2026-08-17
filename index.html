@@ -200,6 +200,46 @@ svg{max-width:100%}
 .tabs2 button{font-size:12px;font-weight:700;color:var(--ink-3);padding:3px 10px;border-radius:8px}
 .tabs2 button.on{background:var(--gray-soft);color:var(--ink)}
 
+/* 감량 플랜 */
+.planwrap{padding:14px 18px 20px}
+.prog{margin-bottom:12px}
+.pbar{height:11px;border-radius:99px;background:var(--gray-soft);overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#f7bd83,var(--brand));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.pnum{font-size:13px;color:var(--ink-2);margin-top:7px;font-weight:600}
+.pnum b{color:var(--ink);font-variant-numeric:tabular-nums}
+.today{background:var(--brand-soft);border-radius:11px;padding:9px 13px;font-size:13px;font-weight:700;margin-bottom:6px}
+.today b{font-variant-numeric:tabular-nums;color:var(--brand-deep)}
+.today span{font-weight:600;color:var(--ink-3);font-size:12px}
+h5.sect{font-size:12.5px;font-weight:800;color:var(--ink-3);margin:20px 0 9px}
+h5.sect span{font-weight:600;color:var(--ink-3);opacity:.8}
+.tl{display:flex;flex-direction:column;gap:7px}
+.tlrow{display:grid;grid-template-columns:26px 46px 1fr;gap:11px;align-items:start;
+  border:1px solid var(--line);border-radius:12px;padding:11px 13px;cursor:pointer;transition:.15s;background:var(--bg)}
+.tlrow:hover{border-color:var(--brand)}
+.tlrow.on{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
+.tlck{width:22px;height:22px;border-radius:7px;border:1.6px solid var(--line-2);background:var(--panel);
+  font-size:12px;font-weight:800;color:#fff;display:grid;place-items:center;margin-top:1px}
+.tlrow.on .tlck{background:var(--ok);border-color:var(--ok)}
+.tlt{font-size:12px;font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums;margin-top:3px}
+.tlh{font-size:14px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tlh .kc{font-size:11.5px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.tlb ul{margin:5px 0 0;padding-left:16px}
+.tlb li{font-size:12.5px;color:var(--ink-2);line-height:1.66}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+@media (max-width:760px){.two{grid-template-columns:1fr}.tlrow{grid-template-columns:24px 1fr;gap:9px}.tlt{display:none}}
+.stbox{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg)}
+.stbox b{font-size:13px;letter-spacing:-.02em}
+.stbox ul{margin:7px 0 0;padding-left:16px}
+.stbox li{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+.vcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:11px}
+.vcards .card.wr{border-color:color-mix(in srgb,var(--warn) 45%,transparent);background:var(--warn-soft)}
+.vcards .card.fix{border-color:#d98070;background:#fbe3df}
+@media (prefers-color-scheme:dark){.vcards .card.fix{background:#3a231e;border-color:#7a4438}}
+.vf{font-size:10px;font-weight:800;padding:2px 7px;border-radius:6px;margin-left:auto;white-space:nowrap}
+.vf.ok{background:var(--ok-soft);color:var(--ok)}
+.vf.warn{background:var(--panel);color:var(--warn)}
+.vf.bad{background:#c0392b;color:#fff}
+
 /* 체중 차트 */
 #wChart{padding:10px 18px 18px}
 #wChart svg{width:100%;height:170px;display:block;overflow:visible}
@@ -457,7 +497,7 @@ kbd{background:var(--gray-soft);border:1px solid var(--line-2);border-radius:5px
       <div class="kpi"><b id="kHrs">0</b><span>누적시간</span></div>
     </div>
     <div class="seg" id="viewSeg">
-      <button data-v="home" class="on">홈</button><button data-v="db">보관함</button>
+      <button data-v="home" class="on">홈</button><button data-v="plan">감량</button><button data-v="db">보관함</button>
     </div>
     <button class="btn sm" id="btnSync"><span id="syncDot">○</span> 동기화</button>
     <button class="btn sm ghost" id="btnExport">내보내기</button>
@@ -471,6 +511,9 @@ kbd{background:var(--gray-soft);border:1px solid var(--line-2);border-radius:5px
     <strong>⚠️ 이 브라우저에서는 기록이 저장되지 않습니다.</strong>
     창을 닫으면 오늘 기록이 사라집니다. Chrome·Edge로 열거나, 끝내기 전에 <b>내보내기</b>로 백업하세요.
   </div>
+
+  <!-- ===== 감량 플랜 ===== -->
+  <div id="viewPlan" style="display:none"></div>
 
   <!-- ===== 보관함 (노션식 데이터베이스) ===== -->
   <div id="viewDb" style="display:none">
@@ -786,6 +829,83 @@ const DEFAULT_ITEMS={
            {em:'🪢',nm:'줄넘기',m:10,obj:'rope'}]
 };
 
+/* ============================================================================
+   감량 플랜 — 노션 AI 대화 내용을 검증해서 옮긴 것.
+   ok:true  = 근거 확인됨 그대로 사용 / ok:'warn' = 조건부 / ok:false = 내가 수정한 부분
+   ========================================================================== */
+const DIET={
+  target:{start:82, month1:77, kcal:1600, protein:140, tdee:2660},
+  day:[
+    {id:'am', t:'07:00', nm:'아침', em:'🥣', kcal:533, pro:51,
+     items:['풀무원 그릭 무가당 2컵(180g)  122kcal · 12g',
+            '프로틴 2스푼(30g)  116kcal · 23g',
+            '구운달걀 2개  145kcal · 12g',
+            '하루견과 1/2봉  85kcal · 2g',
+            '방울토마토 15개  35kcal · 1.5g',
+            '블루베리 50g (갈지 말고 통째로)  30kcal',
+            '슬라이스 치즈는 격일 — 나트륨 250mg 대비 단백질 4g']},
+    {id:'lunch', t:'12:00', nm:'급식', em:'🍚', kcal:650, pro:35,
+     rules:['밥은 1/2 공기 — 하루 최대 절감 항목(155kcal)',
+            '단백질 반찬은 완식, 부족하면 더 받기',
+            '국은 건더기만 — 국물이 나트륨의 주범',
+            '튀김·볶음류는 1조각만',
+            '후식(빵·주스·아이스크림) 생략',
+            '먹는 순서: 나물·김치 → 국 건더기 → 단백질 → 밥']},
+    {id:'pre', t:'18:30', nm:'운동 전', em:'🥤', kcal:25, pro:0,
+     items:['홍초 25ml + 물 150ml 이상 희석', '또는 블랙커피', '마신 뒤 물로 헹구기 · 양치는 30분 후']},
+    {id:'work', t:'19:30', nm:'운동', em:'🏃', kcal:0, pro:0,
+     items:['스텝밀 45분 (근력 하는 날은 30분)', '손잡이는 손끝만 — 기대면 실제 소모가 20~30% 줄어듦',
+            '심박 116~134 · 말은 되지만 문장이 끊기는 정도']},
+    {id:'pm', t:'20:30', nm:'저녁', em:'🍗', kcal:400, pro:50,
+     items:['닭가슴살 220g + 샐러드', '또는 고등어 1토막 + 두부 1/2모 + 나물',
+            '또는 계란 3개 + 두부 1모 + 방울토마토', '탄수화물은 생략하거나 1/3공기']}
+  ],
+  strength:{
+    A:['불가리안 스플릿 스쿼트  7kg×2  3×10/다리','싱글레그 루마니안 데드리프트  12.5kg×1  3×10/다리',
+       '템포 스쿼트(3초 하강)  7kg×2  3×15','푸시업  3×최대','플랭크  3×45초'],
+    B:['턱걸이  5×4~7 (지금 방식 유지)','덤벨 숄더프레스  7kg×2  3×10~12',
+       '원암 덤벨 로우  12.5kg×1  3×12/팔','사이드 레터럴 레이즈  1.5kg  2×15','데드버그  3×10/측']
+  },
+  cards:[
+    {ev:'A',ok:true,t:'기초대사량 계산은 정확합니다',
+     x:'Mifflin-St Jeor 공식으로 41세 179cm 82kg 남성은 <b>1,739kcal</b>. 대화의 1,740과 일치합니다. 여기에 활동량을 더한 총 소비 2,660kcal도 스텝밀 MET 9.0을 적용해 다시 계산해보니 맞습니다.',
+     s:'Mifflin-St Jeor 공식 / Compendium of Physical Activities'},
+    {ev:'A',ok:false,t:'⚠️ 한 달 5kg은 권장 속도를 넘습니다',
+     x:'이 계획의 감량 속도는 <b>주당 체중의 1.18%</b>입니다. 근육을 지키는 권장 상한은 0.5~1.0%인데 이를 넘습니다. <b>대화 스스로도 "0.8%/주가 상한"이라고 써놓고 계획은 1.18%로 짰습니다 — 앞뒤가 안 맞습니다.</b> 적자도 40%로, 권장 25~30%를 넘습니다. 현실적으로는 <b>4주에 3.5~4.5kg</b>을 예상하시는 게 맞고, 5kg에 못 미쳐도 실패가 아닙니다.',
+     s:'체중감량 속도 권고 / 에너지 적자 비율 가이드'},
+    {ev:'B',ok:'warn',t:'“지방 1kg = 7,700kcal” 은 과대추정입니다',
+     x:'널리 쓰이는 계산이지만, 실제로는 감량이 진행될수록 대사가 적응해 같은 적자로도 덜 빠집니다. 이 공식은 초반 몇 주만 잘 맞고 이후 실제 감량은 계산보다 적게 나옵니다. 계획대로 안 빠져도 정상입니다.',
+     s:'3500kcal 법칙의 한계 · 대사적응 연구'},
+    {ev:'A',ok:true,t:'단백질 140g은 근거에 맞습니다',
+     x:'체중 1kg당 <b>1.66g</b>입니다. 열량 적자 + 저항운동 상황에서 근육 보존에 권고되는 1.6~2.4g/kg 범위 안에 정확히 들어옵니다. 적자가 클수록 단백질이 근손실을 막는 유일한 장치입니다.',
+     s:'ISSN 단백질 섭취 포지션 스탠드'},
+    {ev:'A',ok:true,t:'아침 고단백은 실제로 도움이 됩니다',
+     x:'아침 단백질 51g은 이후 식사의 과식을 억제합니다. 기존 구성(23g)에서 요거트와 프로틴을 더해 올린 판단이 맞습니다. 주스를 통과일로 바꾼 것도 옳습니다 — 씹는 행위가 포만감을 만들고 섬유질이 남아 혈당이 완만해집니다.',
+     s:'아침 단백질-식욕 조절 연구'},
+    {ev:'B',ok:true,t:'스텝밀은 이 체중에서 좋은 선택입니다',
+     x:'MET 9.0으로 무충격 기구 중 소모량이 가장 높습니다. 82kg에서 러닝보다 무릎에 안전하면서 소모는 더 큽니다. <b>손잡이에 기대면 실제 소모가 20~30% 떨어지는데 기기 화면 숫자는 그대로</b>라는 지적도 맞습니다.',
+     s:'Compendium of Physical Activities / 스텝밀 부하 연구'},
+    {ev:'A',ok:true,t:'근력운동을 추가하라는 판단이 맞습니다',
+     x:'턱걸이만으로는 <b>하체·가슴·어깨·코어가 비어 있습니다.</b> 하체는 몸 근육의 절반이라 감량기에 가장 먼저 빠지고 기초대사량을 끌어내립니다. 스텝밀은 유산소일 뿐 근력 자극이 약합니다. 주 2회 22분 배치는 적절합니다.',
+     s:'WHO 신체활동 지침 / 감량기 저항운동 연구'},
+    {ev:'B',ok:true,t:'홍초는 감량의 변수가 아닙니다',
+     x:'25ml에 25kcal, 당 3g. 운동 소모의 7% 수준이라 무시해도 됩니다. 아세트산의 식후 혈당 완만화는 일부 확인되지만 <b>체중 감량 효과는 미미</b>합니다. 대화가 처음 추정을 라벨 보고 정정한 것도 옳습니다. 다만 <b>pH 3 내외라 치아 산부식은 실제 위험</b>이니 희석·헹굼·양치 30분 후는 지키세요.',
+     s:'식초-혈당 연구 / 치아 산부식 관리'},
+    {ev:'A',ok:true,t:'대두단백이 남성호르몬을 낮추지 않습니다',
+     x:'여러 메타분석에서 남성의 콩 섭취와 테스토스테론 변화 사이에 유의한 연관이 없습니다. 분리대두단백은 정제 과정에서 이소플라본도 상당량 빠집니다. 인터넷의 반대 주장은 근거가 없습니다.',
+     s:'대두 이소플라본-테스토스테론 메타분석'},
+    {ev:'A',ok:true,t:'운동 후 30분 안에 먹을 필요 없습니다',
+     x:'“아나볼릭 윈도우”는 크게 과장된 개념으로 정리됐습니다. <b>하루 총 단백질량이 타이밍보다 압도적으로 중요</b>합니다. 제품 안내를 무시하고 아침 요거트에 섞으라는 조언이 맞습니다.',
+     s:'단백질 섭취 타이밍 메타분석'},
+    {ev:'A',ok:'warn',t:'⚠️ 빠른 감량은 담석 위험을 올립니다',
+     x:'주 1kg을 넘는 감량에서 담석 발생이 늘어납니다. 담낭이 수축하려면 지방 섭취가 필요해서, <b>견과 1/2봉을 남겨둔 것은 근거 있는 조치</b>입니다. 0으로 줄이지 마세요. 오른쪽 윗배 통증이 반복되면 진료받으세요.',
+     s:'급속 감량-담석 위험 연구'},
+    {ev:'C',ok:'warn',t:'급식 열량 750~900kcal은 추정치입니다',
+     x:'교사 배식이 학생용보다 많다는 전제는 그럴듯하지만 <b>확인된 수치가 아닙니다.</b> 배식 규칙 5가지 자체는 타당하니 그대로 쓰되, 열량 숫자는 참고로만 보세요. 먹는 순서(채소→단백질→밥)는 혈당 상승을 낮춘다는 근거가 있습니다.',
+     s:'추정치 · 식사 순서-혈당 연구'}
+  ]
+};
+
 /* ---- 보관함 정의 (노션식 데이터베이스). sp = 어느 공간/부위에 붙는지 ---- */
 const BINS=[
   {id:'fridge',sp:'kitchen',name:'냉장고',      emoji:'🧊',dl:'유통기한',cats:['채소·과일','육류·생선','유제품','반찬','음료','냉동','소스·양념']},
@@ -804,9 +924,17 @@ const DEFAULT_INV={
     {nm:'비타민D',        cat:'영양제',qty:1,unit:'통',part:'muscle',note:'실내 근무면 부족하기 쉬움. 혈중 농도 확인 후 결정'},
     {nm:'가정용 혈압계',   cat:'측정기기',qty:1,unit:'대',part:'heart',note:'아침 기상 후·저녁 취침 전 각 2회'},
     {nm:'치간칫솔',        cat:'위생용품',qty:1,unit:'팩',part:'teeth',note:'40대는 치실보다 치간칫솔이 효과 큼'},
-    {nm:'눈 온찜질 안대',  cat:'위생용품',qty:1,unit:'개',part:'eye',  note:'40℃ 5~10분. 마이봄샘 기능장애에 효과 확인됨'}
+    {nm:'눈 온찜질 안대',  cat:'위생용품',qty:1,unit:'개',part:'eye',  note:'40℃ 5~10분. 마이봄샘 기능장애에 효과 확인됨'},
+    {nm:'머슬코어 프로틴',  cat:'영양제',qty:1,unit:'통',part:'muscle',note:'2스푼(30g)=단백질 23g. 아침 요거트에 섞기. 나트륨 245mg이라 물 500ml 추가'},
+    {nm:'하루견과',        cat:'영양제',qty:1,unit:'박스',part:'gut',  note:'1/2봉 유지 — 지방 섭취가 담석 예방에 필요. 0으로 줄이지 말 것'}
   ],
-  fridge:[{nm:'달걀',cat:'유제품',qty:10,unit:'개'},{nm:'우유',cat:'유제품',qty:1,unit:'팩'},{nm:'닭가슴살',cat:'육류·생선',qty:4,unit:'팩',note:'끼니당 단백질 25~30g'}],
+  fridge:[{nm:'풀무원 그릭 무가당',cat:'유제품',qty:6,unit:'컵',note:'아침 2컵(180g) · 100g당 단백질 6.7g, 당 1.9g'},
+          {nm:'구운달걀',cat:'유제품',qty:10,unit:'개',note:'아침 2개'},
+          {nm:'방울토마토',cat:'채소·과일',qty:1,unit:'팩',note:'아침 15개'},
+          {nm:'블루베리',cat:'채소·과일',qty:1,unit:'팩',note:'갈지 말고 통째로 50g'},
+          {nm:'닭가슴살',cat:'육류·생선',qty:4,unit:'팩',note:'저녁 220g'},
+          {nm:'슬라이스 치즈',cat:'유제품',qty:1,unit:'팩',note:'격일 — 나트륨 250mg에 단백질 4g'},
+          {nm:'홍초(저당)',cat:'음료',qty:1,unit:'병',note:'25ml + 물 150ml. 마신 뒤 헹구고 양치는 30분 후'}],
   closet:[{nm:'정장 한 벌',cat:'정장',qty:1,unit:'벌'},{nm:'러닝화',cat:'신발',qty:1,unit:'켤레',note:'주행거리 500km 넘으면 교체'}],
   food:[], bathsp:[], util:[]
 };
@@ -854,6 +982,16 @@ const Store={
     for(const b of BINS){
       if(!Array.isArray(this.s.inv[b.id]))
         this.s.inv[b.id]=(DEFAULT_INV[b.id]||[]).map((it,i)=>({id:b.id+i,qty:1,unit:'개',...it}));
+    }
+    /* 새로 추가된 기본 물품을 한 번만 채워 넣는다 (보관함 초기화 뒤에 실행해야 한다) */
+    if(this.s.invMig!==2){
+      for(const b of BINS){
+        const have=new Set(this.s.inv[b.id].map(x=>x.nm));
+        (DEFAULT_INV[b.id]||[]).forEach((it,i)=>{
+          if(!have.has(it.nm)) this.s.inv[b.id].push({id:b.id+'m'+i,qty:1,unit:'개',...it});
+        });
+      }
+      this.s.invMig=2;
     }
     /* 체형 */
     const bd=this.s.body||{};
@@ -2136,11 +2274,76 @@ function openAddInv(){
   });
   setTimeout(()=>$('#iN').focus(),50);
 }
+/* ---------- 감량 플랜 ---------- */
+function planChecks(){
+  const k=TODAY();
+  Store.s.plan=Store.s.plan||{};
+  Store.s.plan[k]=Store.s.plan[k]||[];
+  return Store.s.plan[k];
+}
+function renderPlan(){
+  const B=Store.s.body, T=DIET.target, done=planChecks();
+  const lost=+(T.start-B.w).toFixed(1);
+  const need=+(B.w-T.month1).toFixed(1);
+  const pct=Math.max(0,Math.min(100,(T.start-B.w)/(T.start-T.month1)*100));
+  const eatK=DIET.day.filter(d=>done.includes(d.id)).reduce((a,d)=>a+d.kcal,0);
+  const eatP=DIET.day.filter(d=>done.includes(d.id)).reduce((a,d)=>a+d.pro,0);
+  const badge=c=>c.ok===true?'<span class="vf ok">검증됨</span>'
+             :c.ok==='warn'?'<span class="vf warn">조건부</span>'
+             :'<span class="vf bad">수정함</span>';
+  $('#viewPlan').innerHTML=`
+  <section class="panel" style="margin-top:16px">
+    <div class="p-head"><h2>한 달 감량 플랜</h2>
+      <span class="sub">${T.start}kg → ${T.month1}kg · 하루 ${T.kcal}kcal · 단백질 ${T.protein}g</span></div>
+    <div class="planwrap">
+      <div class="prog">
+        <div class="pbar"><i style="width:${pct}%"></i></div>
+        <div class="pnum"><b>${lost>0?'-'+lost:lost<0?'+'+(-lost):'0'}kg</b> 감량 ·
+          목표까지 <b>${need>0?need+'kg':'달성'}</b> · 진행 ${pct.toFixed(0)}%</div>
+      </div>
+      <div class="today">오늘 체크한 것 <b>${eatK}kcal</b> · 단백질 <b>${eatP}g</b>
+        <span>(목표 ${T.kcal}kcal / ${T.protein}g)</span></div>
+
+      <h5 class="sect">하루 순서</h5>
+      <div class="tl">${DIET.day.map(d=>{
+        const on=done.includes(d.id);
+        return `<div class="tlrow ${on?'on':''}" data-d="${d.id}">
+          <button class="tlck">${on?'✓':''}</button>
+          <div class="tlt">${d.t}</div>
+          <div class="tlb">
+            <div class="tlh">${d.em} ${d.nm}
+              ${d.kcal?`<span class="kc">${d.kcal}kcal · 단백질 ${d.pro}g</span>`:''}</div>
+            <ul>${(d.items||d.rules||[]).map(x=>`<li>${esc(x).replace(/&lt;b&gt;/g,'<b>').replace(/&lt;\/b&gt;/g,'</b>')}</li>`).join('')}</ul>
+          </div></div>`;
+      }).join('')}</div>
+
+      <h5 class="sect">근력 주 2회 · 22분 <span>스텝밀보다 먼저 하세요</span></h5>
+      <div class="two">
+        <div class="stbox"><b>A일 — 하체 + 가슴</b><ul>${DIET.strength.A.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div class="stbox"><b>B일 — 등 + 어깨 + 코어</b><ul>${DIET.strength.B.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      </div>
+
+      <h5 class="sect">검증 결과 <span>노션 AI 대화를 항목별로 확인했습니다</span></h5>
+      <div class="vcards">${DIET.cards.map(c=>`
+        <div class="card ${c.ok===false?'fix':c.ok==='warn'?'wr':''}">
+          <h4><span class="ev ${c.ev}">${c.ev}</span>${esc(c.t)}${badge(c)}</h4>
+          <p>${c.x}</p><div class="src">근거 · ${esc(c.s)}</div>
+        </div>`).join('')}</div>
+    </div>
+  </section>`;
+  $$('#viewPlan .tlrow').forEach(r=>r.addEventListener('click',()=>{
+    const id=r.dataset.d, list=planChecks(), i=list.indexOf(id);
+    if(i<0) list.push(id); else list.splice(i,1);
+    Store.save(); renderPlan();
+  }));
+}
 function setView(v){
   $('#viewHome').style.display = v==='home'?'':'none';
   $('#viewDb').style.display   = v==='db'?'':'none';
+  $('#viewPlan').style.display = v==='plan'?'':'none';
   $$('#viewSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
   if(v==='db') renderDb();
+  if(v==='plan') renderPlan();
   scrollTo({top:0,behavior:'smooth'});
 }
 
